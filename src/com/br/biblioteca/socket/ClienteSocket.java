@@ -27,17 +27,16 @@ public class ClienteSocket {
 			out.write(opcao);
 			out.flush();
 			
-			Livro livro = new Livro("Quando Nietzsche chorou", "Irvin d yarlim", "Romance", 3);
 			
 			switch (opcao) {
 			case 1:
 				clienteFunctions.reqGetLivros(in, out);
 				break;
 			case 2:
-				System.out.println("opcao 2");
+				clienteFunctions.reqAlugaLivro(out);
 				break;
 			case 3:
-				System.out.println("opcao 3");
+				clienteFunctions.reqDevolveLivro(out);;
 				break;
 			case 4:
 				clienteFunctions.reqAddLivros(in, out);

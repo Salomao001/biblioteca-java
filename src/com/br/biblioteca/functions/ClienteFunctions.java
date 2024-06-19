@@ -45,4 +45,26 @@ public class ClienteFunctions {
 		System.out.println(in.readLine());
 	}
 	
+	public void reqAlugaLivro(BufferedWriter out) throws IOException {
+		System.out.printf("Título: ");
+		out.write("Cartas Chilenas");
+		out.newLine();
+		
+		System.out.printf("Autor: ");
+		out.write("Tomás Antônio Gonzaga");
+		out.newLine();
+		out.flush();
+	}
+	
+	public void reqDevolveLivro(BufferedWriter out) throws IOException {
+		System.out.printf("Título: ");
+		out.write("Cartas Chilenas");
+		out.newLine();
+		
+		System.out.printf("Autor: ");
+		out.write("Tomás Antônio Gonzaga");
+		out.newLine();
+		out.flush();
+	}
+	
 }

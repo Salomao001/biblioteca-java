@@ -28,8 +28,8 @@ public class ServidorSocket {
 			
 			switch (opcao) {
 			case 1: servidorFunctions.getLivros(out); break;
-			case 2: System.out.println("opcao 2" ); break;
-			case 3: System.out.println("opcao 3" ); break;
+			case 2: servidorFunctions.alugarLivro(in.readLine(), in.readLine()); break;
+			case 3: servidorFunctions.devolverLivro(in.readLine(), in.readLine()); break;
 			case 4: servidorFunctions.AddLivro(in, out); break;
 			case 0: System.out.println("opcao 0" ); break;
 			default:

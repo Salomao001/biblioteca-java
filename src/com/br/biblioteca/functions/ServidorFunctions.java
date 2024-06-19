@@ -60,7 +60,52 @@ public class ServidorFunctions {
         
         
         out.write("Livro adicionado com sucesso!");
+        out.flush();
 	}
+	
+	public void alugarLivro(String titulo, String autor) {
+		System.out.println(titulo);
+		System.out.println(autor);
+        String jsonString = readFile(pathFile);
+        if (jsonString != null) {
+            JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+            JsonArray livros = jsonObject.getAsJsonArray("livros");
+
+            for (int i = 0; i < livros.size(); i++) {
+                JsonObject livro = livros.get(i).getAsJsonObject();
+                if (livro.get("titulo").getAsString().equals(titulo) && livro.get("autor").getAsString().equals(autor)) {
+                    int exemplares = livro.get("exemplares").getAsInt();
+                    if (exemplares > 0) {
+                        livro.addProperty("exemplares", exemplares - 1);
+                    } else {
+                        System.out.println("Nenhum exemplar disponível para aluguel.");
+                    }
+                    break;
+                }
+            }
+
+            writeFile(pathFile, jsonObject);
+        }
+    }
+	
+	public void devolverLivro(String titulo, String autor) {
+        String jsonString = readFile(pathFile);
+        if (jsonString != null) {
+            JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
+            JsonArray livros = jsonObject.getAsJsonArray("livros");
+
+            for (int i = 0; i < livros.size(); i++) {
+                JsonObject livro = livros.get(i).getAsJsonObject();
+                if (livro.get("titulo").getAsString().equals(titulo) && livro.get("autor").getAsString().equals(autor)) {
+                    int exemplares = livro.get("exemplares").getAsInt();
+                    livro.addProperty("exemplares", exemplares + 1);
+                    break;
+                }
+            }
+
+            writeFile(pathFile, jsonObject);
+        }
+    }
 	
 	public String readFile(String path) {
         StringBuilder contentBuilder = new StringBuilder();
@@ -82,7 +127,6 @@ public class ServidorFunctions {
 			FileWriter file = new FileWriter(path);
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	        String jsonString = gson.toJson(jsonObject);
-			System.out.println(jsonString);
 			file.write(jsonString);
 			file.flush();
 		} catch (IOException e) {
