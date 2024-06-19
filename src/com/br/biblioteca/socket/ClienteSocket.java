@@ -4,10 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -25,14 +21,17 @@ public class ClienteSocket {
 		try {
 			Socket socket = new Socket("localhost", 12345);
 			
-			ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
-			ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+			
+			out.write(opcao);
+			out.flush();
 			
 			Livro livro = new Livro("Quando Nietzsche chorou", "Irvin d yarlim", "Romance", 3);
-			out.writeObject(livro);
+			
 			switch (opcao) {
 			case 1:
-				clienteFunctions.reqGetLivros(in, out, opcao);
+				clienteFunctions.reqGetLivros(in, out);
 				break;
 			case 2:
 				System.out.println("opcao 2");
@@ -41,7 +40,7 @@ public class ClienteSocket {
 				System.out.println("opcao 3");
 				break;
 			case 4:
-				System.out.println("opcao 4");
+				clienteFunctions.reqAddLivros(in, out);
 				break;
 			case 0:
 				System.out.println("opcao 0");

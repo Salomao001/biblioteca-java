@@ -9,7 +9,7 @@ public class Livro {
 	private String autor;
 	@SerializedName("genero")
 	private String genero;
-	@SerializedName("genero")
+	@SerializedName("exemplares")
 	private int exemplares;
 	
 	public Livro(String titulo, String autor, String genero, int exemplares) {
