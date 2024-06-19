@@ -15,7 +15,6 @@ import com.br.biblioteca.model.Livro;
 public class ClienteSocket {
 
 	public static void main(String[] args) {
-		int opcao = new Menu().exibirMenu();
 		ClienteFunctions clienteFunctions = new ClienteFunctions();
 		
 		try {
@@ -24,29 +23,33 @@ public class ClienteSocket {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			
-			out.write(opcao);
-			out.flush();
-			
-			
-			switch (opcao) {
-			case 1:
-				clienteFunctions.reqGetLivros(in, out);
-				break;
-			case 2:
-				clienteFunctions.reqAlugaLivro(out);
-				break;
-			case 3:
-				clienteFunctions.reqDevolveLivro(out);;
-				break;
-			case 4:
-				clienteFunctions.reqAddLivros(in, out);
-				break;
-			case 0:
-				System.out.println("opcao 0");
-				break;
-			default:
-				break;
-			}
+			int opcao = 0;
+			do {
+				opcao = new Menu().exibirMenu();
+				out.write(opcao);
+				out.flush();
+				
+				switch (opcao) {
+				case 1:
+					clienteFunctions.reqGetLivros(in, out);
+					break;
+				case 2:
+					clienteFunctions.reqAlugaLivro(out);
+					break;
+				case 3:
+					clienteFunctions.reqDevolveLivro(out);;
+					break;
+				case 4:
+					clienteFunctions.reqAddLivros(in, out);
+					break;
+				case 0:
+					System.out.println("opcao 0");
+					break;
+				default:
+					break;
+				}
+				
+			} while (opcao != 0);
 			
 			socket.close();
 		} catch (UnknownHostException e) {

@@ -15,9 +15,15 @@ public class ClienteFunctions {
 	public void reqGetLivros(BufferedReader in, BufferedWriter out) throws IOException {
 		
 		String linha;
-		while((linha = in.readLine()) != null) {
-			System.out.println(linha);
-		}
+        System.out.println("Livros disponíveis:");
+        while ((linha = in.readLine()) != null && !linha.equals("END")) {
+            System.out.println(linha);
+        }
+
+
+        if (linha.equals("END")) {
+            System.out.println("Fim da lista de livros.");
+        }
 	}
 	
 	public void reqAddLivros(BufferedReader in, BufferedWriter out) throws IOException {
@@ -42,7 +48,7 @@ public class ClienteFunctions {
 		out.newLine();
 		out.flush();
 		
-		System.out.println(in.readLine());
+		System.out.println("\n" + in.readLine());
 	}
 	
 	public void reqAlugaLivro(BufferedWriter out) throws IOException {
@@ -65,6 +71,10 @@ public class ClienteFunctions {
 		out.write("Tomás Antônio Gonzaga");
 		out.newLine();
 		out.flush();
+	}
+	
+	public void reqTerminaAplicacao(BufferedWriter out) {
+		
 	}
 	
 }

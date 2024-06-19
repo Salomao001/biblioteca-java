@@ -35,6 +35,7 @@ public class ServidorFunctions {
 				if (linha.contains("exemplares")) 
 					out.write(linha + "\n");
 			}
+			out.write("END\n");
 			out.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -58,14 +59,11 @@ public class ServidorFunctions {
         writeFile(pathFile, jsonObject);
         
         
-        
-        out.write("Livro adicionado com sucesso!");
+        out.write("Livro adicionado com sucesso!\n");
         out.flush();
 	}
 	
 	public void alugarLivro(String titulo, String autor) {
-		System.out.println(titulo);
-		System.out.println(autor);
         String jsonString = readFile(pathFile);
         if (jsonString != null) {
             JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();

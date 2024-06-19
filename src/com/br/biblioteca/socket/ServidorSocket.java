@@ -24,19 +24,22 @@ public class ServidorSocket {
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 			
-			int opcao = in.read();
-			
-			switch (opcao) {
-			case 1: servidorFunctions.getLivros(out); break;
-			case 2: servidorFunctions.alugarLivro(in.readLine(), in.readLine()); break;
-			case 3: servidorFunctions.devolverLivro(in.readLine(), in.readLine()); break;
-			case 4: servidorFunctions.AddLivro(in, out); break;
-			case 0: System.out.println("opcao 0" ); break;
-			default:
-				System.out.println("outro");
-				break;
-			}
-			
+			int opcao;
+			do {
+				opcao = in.read();
+				
+				switch (opcao) {
+				case 1: servidorFunctions.getLivros(out); break;
+				case 2: servidorFunctions.alugarLivro(in.readLine(), in.readLine()); break;
+				case 3: servidorFunctions.devolverLivro(in.readLine(), in.readLine()); break;
+				case 4: servidorFunctions.AddLivro(in, out); break;
+				case 0: System.out.println("opcao 0" ); break;
+				default:
+					System.out.println("outro");
+					break;
+				}
+				
+			} while (opcao != 0);
 			socket.close();
 			server.close();
 		} catch (IOException e) {
