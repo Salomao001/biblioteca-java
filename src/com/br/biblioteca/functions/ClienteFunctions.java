@@ -18,63 +18,69 @@ public class ClienteFunctions {
         System.out.println("Livros disponíveis:");
         while ((linha = in.readLine()) != null && !linha.equals("END")) {
             System.out.println(linha);
+            if (linha.contains("exemplares"))
+            	System.out.println("\n");
         }
 
 
         if (linha.equals("END")) {
-            System.out.println("Fim da lista de livros.");
+            System.out.println("Fim da lista de livros.\n");
         }
 	}
 	
 	public void reqAddLivros(BufferedReader in, BufferedWriter out) throws IOException {
 		
 		System.out.printf("Título: ");
-		out.write("Quando Nietzsche chorou");
+		out.write(sc.nextLine().strip());
 		out.newLine();
 		
 		System.out.printf("Autor: ");
-		out.write("Irvin D Yalom");
+		out.write(sc.nextLine().strip());
 		//out.write(sc.nextLine());
 		out.newLine();
 		
 		System.out.printf("Genero: ");
-		out.write("Romance");
+		out.write(sc.nextLine().strip());
 		//out.write(sc.nextLine());
 		out.newLine();
 		
 		System.out.printf("Exemplares: ");
-		out.write("3");
+		out.write(sc.nextLine().strip());
 		//out.write(sc.nextLine());
 		out.newLine();
 		out.flush();
 		
+		System.out.println("\n\n" + in.readLine() + "\n");
+	}
+	
+	public void reqAlugaLivro(BufferedWriter out, BufferedReader in) throws IOException {
+		System.out.printf("Título: ");
+		out.write(sc.nextLine().strip());
+		out.newLine();
+		
+		System.out.printf("Autor: ");
+		out.write(sc.nextLine().strip());
+		out.newLine();
+		out.flush();
+		
+		System.out.println("\n\n" + in.readLine()+ "\n");
+	}
+	
+	public void reqDevolveLivro(BufferedReader in,BufferedWriter out) throws IOException {
+		System.out.printf("Título: ");
+		out.write(sc.nextLine().strip());
+		out.newLine();
+		
+		System.out.printf("Autor: ");
+		out.write(sc.nextLine().strip());
+		out.newLine();
+		out.flush();
+		
+		System.out.println("\n\n" + in.readLine() + "\n");
+	}
+	
+	public void resTerminaAplicacao(BufferedReader in) throws IOException {
 		System.out.println("\n" + in.readLine());
-	}
-	
-	public void reqAlugaLivro(BufferedWriter out) throws IOException {
-		System.out.printf("Título: ");
-		out.write("Cartas Chilenas");
-		out.newLine();
-		
-		System.out.printf("Autor: ");
-		out.write("Tomás Antônio Gonzaga");
-		out.newLine();
-		out.flush();
-	}
-	
-	public void reqDevolveLivro(BufferedWriter out) throws IOException {
-		System.out.printf("Título: ");
-		out.write("Cartas Chilenas");
-		out.newLine();
-		
-		System.out.printf("Autor: ");
-		out.write("Tomás Antônio Gonzaga");
-		out.newLine();
-		out.flush();
-	}
-	
-	public void reqTerminaAplicacao(BufferedWriter out) {
-		
 	}
 	
 }

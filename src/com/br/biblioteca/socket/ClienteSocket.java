@@ -34,16 +34,16 @@ public class ClienteSocket {
 					clienteFunctions.reqGetLivros(in, out);
 					break;
 				case 2:
-					clienteFunctions.reqAlugaLivro(out);
+					clienteFunctions.reqAlugaLivro(out, in);
 					break;
 				case 3:
-					clienteFunctions.reqDevolveLivro(out);;
+					clienteFunctions.reqDevolveLivro(in, out);
 					break;
 				case 4:
 					clienteFunctions.reqAddLivros(in, out);
 					break;
 				case 0:
-					System.out.println("opcao 0");
+					clienteFunctions.resTerminaAplicacao(in);
 					break;
 				default:
 					break;

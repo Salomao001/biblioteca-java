@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.br.biblioteca.model.Livro;
 import com.google.gson.Gson;
@@ -17,8 +19,10 @@ import com.google.gson.JsonParser;
 public class ServidorFunctions {
 
 	private final String pathFile = "./src/livros.json";
+	private List<Livro> livrosAlugados = new ArrayList<>();
 	
 	public void getLivros(BufferedWriter out) {
+		System.out.println("Servidor: Listando livros\n");
 		try {
 			FileReader file = new FileReader(pathFile);
 			BufferedReader in = new BufferedReader(file);
@@ -44,6 +48,7 @@ public class ServidorFunctions {
 	}
 	
 	public void AddLivro(BufferedReader in, BufferedWriter out) throws IOException {
+		System.out.println("Servidor: Cadastrando um livro novo ou existente\n");
 		
 		String jsonString = readFile(pathFile);
 		
@@ -63,7 +68,9 @@ public class ServidorFunctions {
         out.flush();
 	}
 	
-	public void alugarLivro(String titulo, String autor) {
+	public void alugarLivro(String titulo, String autor, BufferedWriter out) throws IOException {
+		System.out.println("Servidor: Cliente alugando livro\n");
+		
         String jsonString = readFile(pathFile);
         if (jsonString != null) {
             JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
@@ -75,33 +82,53 @@ public class ServidorFunctions {
                     int exemplares = livro.get("exemplares").getAsInt();
                     if (exemplares > 0) {
                         livro.addProperty("exemplares", exemplares - 1);
+                        Livro livroAlugado = new Livro(titulo, autor, "", 1);
+                        livrosAlugados.add(livroAlugado);
+                        out.write("Livro alugado com sucesso!\n");
+                        out.flush();
                     } else {
-                        System.out.println("Nenhum exemplar disponível para aluguel.");
+                        out.write("Nenhum exemplar disponível para aluguel.\n");
+                        out.flush();
                     }
                     break;
                 }
             }
-
             writeFile(pathFile, jsonObject);
         }
     }
 	
-	public void devolverLivro(String titulo, String autor) {
+	public void devolverLivro(String titulo, String autor, BufferedWriter out) throws IOException {
+		System.out.println("Servidor: Cliente devolvendo livro\n");
         String jsonString = readFile(pathFile);
         if (jsonString != null) {
             JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
             JsonArray livros = jsonObject.getAsJsonArray("livros");
 
-            for (int i = 0; i < livros.size(); i++) {
-                JsonObject livro = livros.get(i).getAsJsonObject();
-                if (livro.get("titulo").getAsString().equals(titulo) && livro.get("autor").getAsString().equals(autor)) {
-                    int exemplares = livro.get("exemplares").getAsInt();
-                    livro.addProperty("exemplares", exemplares + 1);
+            boolean livroAlugado = false;
+            for (Livro livro : livrosAlugados) {
+            	if (livro.getTitulo().equals(titulo) && livro.getAutor().equals(autor)) {
+            		for (int i = 0; i < livros.size(); i++) {
+            			JsonObject livroJ = livros.get(i).getAsJsonObject();
+            			if (livroJ.get("titulo").getAsString().equals(titulo) && livroJ.get("autor").getAsString().equals(autor)) {
+            				int exemplares = livroJ.get("exemplares").getAsInt();
+            				livroJ.addProperty("exemplares", exemplares + 1);
+            				break;
+            			}
+            		}
+            		livrosAlugados.remove(livro);
+            		livroAlugado = true;
                     break;
-                }
+            	}
             }
-
-            writeFile(pathFile, jsonObject);
+            
+            if (livroAlugado) {
+            	writeFile(pathFile, jsonObject);
+            	out.write("Livro devolvido com sucesso!\n");
+            	out.flush();
+            } else {
+            	out.write("Voce não alugou este livro!\n");
+            	out.flush();
+            }
         }
     }
 	
@@ -153,4 +180,15 @@ public class ServidorFunctions {
 			livros.add(novoLivroJson);
 		}
     }
+	
+	public void terminaAplicacao(BufferedWriter out) throws IOException {
+		System.out.println("Servidor: Finalizando aplicação\n");
+		if (livrosAlugados.isEmpty()) {
+			out.write("Sessão finalizada.\n");
+			out.flush();
+		} else {
+			out.write("Voce pegou livros e não devolveu??? Vai ser cobrado!!\n");
+			out.flush();
+		}
+	}
 }
