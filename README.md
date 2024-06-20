@@ -114,11 +114,6 @@ Para instalar a biblioteca Gson, adicione a seguinte dependência ao seu projeto
 </dependency>
 ```
 
-
-## Licença
-
-Este projeto está licenciado sob a licença MIT - veja o arquivo LICENSE para detalhes.
-
 ---
 
 ### Observação
