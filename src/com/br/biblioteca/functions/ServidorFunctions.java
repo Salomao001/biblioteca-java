@@ -131,7 +131,8 @@ public class ServidorFunctions {
             }
         }
     }
-	
+
+	//Le o JSON como uma String
 	public String readFile(String path) {
         StringBuilder contentBuilder = new StringBuilder();
         try (BufferedReader bf = new BufferedReader(new FileReader(path))) {

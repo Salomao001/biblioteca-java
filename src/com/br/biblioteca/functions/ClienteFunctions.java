@@ -36,17 +36,14 @@ public class ClienteFunctions {
 		
 		System.out.printf("Autor: ");
 		out.write(sc.nextLine().strip());
-		//out.write(sc.nextLine());
 		out.newLine();
 		
 		System.out.printf("Genero: ");
 		out.write(sc.nextLine().strip());
-		//out.write(sc.nextLine());
 		out.newLine();
 		
 		System.out.printf("Exemplares: ");
 		out.write(sc.nextLine().strip());
-		//out.write(sc.nextLine());
 		out.newLine();
 		out.flush();
 		
