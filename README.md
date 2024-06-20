@@ -114,6 +114,8 @@ Para instalar a biblioteca Gson, adicione a seguinte dependência ao seu projeto
 </dependency>
 ```
 
+Link do Jar: https://mvnrepository.com/artifact/com.google.code.gson/gson/2.9.1
+
 ---
 
 ### Observação
