@@ -71,6 +71,12 @@
       "autor": "Banana",
       "genero": "Comédia",
       "exemplares": 5
+    },
+    {
+      "titulo": "Gabriel teste",
+      "autor": "Gabriel",
+      "genero": "comedia",
+      "exemplares": 5
     }
   ]
 }
