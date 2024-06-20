@@ -74,7 +74,9 @@ public class ServidorFunctions {
 	public void alugarLivro(String titulo, String autor, BufferedWriter out) throws IOException {
 		System.out.println("Servidor: Cliente alugando livro\n");
 		
+		boolean livroExiste = false;
         String jsonString = readFile(pathFile);
+		
         if (jsonString != null) {
             JsonObject jsonObject = JsonParser.parseString(jsonString).getAsJsonObject();
             JsonArray livros = jsonObject.getAsJsonArray("livros");
@@ -82,6 +84,7 @@ public class ServidorFunctions {
             for (int i = 0; i < livros.size(); i++) {
                 JsonObject livro = livros.get(i).getAsJsonObject();
                 if (livro.get("titulo").getAsString().equals(titulo) && livro.get("autor").getAsString().equals(autor)) {
+                	livroExiste = true;
                     int exemplares = livro.get("exemplares").getAsInt();
                     if (exemplares > 0) {
                         livro.addProperty("exemplares", exemplares - 1);
@@ -96,6 +99,9 @@ public class ServidorFunctions {
                     break;
                 }
             }
+            if (!livroExiste)
+            	out.write("Este livro Não está no catálogo\n");
+            	out.flush();
             writeFile(pathFile, jsonObject);
         }
     }
