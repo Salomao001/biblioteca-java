@@ -18,9 +18,10 @@ import com.google.gson.JsonParser;
 
 public class ServidorFunctions {
 
-	private final String pathFile = "./src/livros.json";
-	private List<Livro> livrosAlugados = new ArrayList<>();
-	
+	private final String pathFile = "./src/livros.json"; // Caminho do arquivo JSON
+	private List<Livro> livrosAlugados = new ArrayList<>(); // Cria uma Lista para livros alugados
+
+	// Método para listar os livros disponíveis
 	public void getLivros(BufferedWriter out) {
 		System.out.println("Servidor: Listando livros\n");
 		try {
@@ -46,7 +47,8 @@ public class ServidorFunctions {
 			e.printStackTrace();
 		}
 	}
-	
+
+	// Método para adicionar um novo livro
 	public void AddLivro(BufferedReader in, BufferedWriter out) throws IOException {
 		System.out.println("Servidor: Cadastrando um livro novo ou existente\n");
 		
@@ -67,7 +69,8 @@ public class ServidorFunctions {
         out.write("Livro adicionado com sucesso!\n");
         out.flush();
 	}
-	
+
+	// Método para alugar um livro
 	public void alugarLivro(String titulo, String autor, BufferedWriter out) throws IOException {
 		System.out.println("Servidor: Cliente alugando livro\n");
 		
@@ -96,7 +99,8 @@ public class ServidorFunctions {
             writeFile(pathFile, jsonObject);
         }
     }
-	
+
+	// Método para devolver um livro
 	public void devolverLivro(String titulo, String autor, BufferedWriter out) throws IOException {
 		System.out.println("Servidor: Cliente devolvendo livro\n");
         String jsonString = readFile(pathFile);
@@ -132,7 +136,7 @@ public class ServidorFunctions {
         }
     }
 
-	//Le o JSON como uma String
+	// Método para ler o JSON como uma String
 	public String readFile(String path) {
         StringBuilder contentBuilder = new StringBuilder();
         try (BufferedReader bf = new BufferedReader(new FileReader(path))) {
@@ -147,7 +151,8 @@ public class ServidorFunctions {
         }
         return contentBuilder.toString();
     }
-	
+
+	// Método para escrever no arquivo JSON
 	public void writeFile(String path, JsonObject jsonObject) {
 		try {
 			FileWriter file = new FileWriter(path);
@@ -160,7 +165,8 @@ public class ServidorFunctions {
 			e.printStackTrace();
 		}
 	}
-	
+
+	// Método para adicionar ou atualizar um livro no arquivo JSON
 	public void addOrUpdateLivro(JsonObject jsonObject, String titulo, String autor, String genero, int exemplares) {
 		JsonArray livros = jsonObject.getAsJsonArray("livros");
 		boolean livroExistente = false;
@@ -181,7 +187,8 @@ public class ServidorFunctions {
 			livros.add(novoLivroJson);
 		}
     }
-	
+
+	// Método para terminar a aplicação
 	public void terminaAplicacao(BufferedWriter out) throws IOException {
 		System.out.println("Servidor: Finalizando aplicação\n");
 		if (livrosAlugados.isEmpty()) {

@@ -14,10 +14,11 @@ public class Menu {
 		System.out.println("| Cadastrar livro (4) |");
 		System.out.println("| Sair (0)            |");
 		System.out.println("-----------------------");
-		
+
+		// Cria um Scanner para ler a entrada do usuário
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.printf("Sua opção: ");
-		return sc.nextInt();
+		return sc.nextInt(); // Retorna a opção escolhida pelo usuário
 	}
 }

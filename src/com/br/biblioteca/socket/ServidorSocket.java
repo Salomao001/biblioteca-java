@@ -14,19 +14,17 @@ import com.br.biblioteca.functions.ServidorFunctions;
 public class ServidorSocket {
 
 	public static void main(String[] args ) {
-		try (ServerSocket serverSocket = new ServerSocket(12345)) {
+		try (ServerSocket serverSocket = new ServerSocket(12345)) { // Cria um ServerSocket na porta 12345
 			System.out.println("Servidor iniciado na porta " + 12345);
 
 			while (true) {
-				Socket clientSocket = serverSocket.accept();
+				Socket clientSocket = serverSocket.accept(); // Aguarda uma conexão de um cliente
 				System.out.println("Nova conexão aceita: " + clientSocket.getInetAddress().getHostAddress());
 
-				new Thread(new ClientHandler(clientSocket)).start();
+				new Thread(new ClientHandler(clientSocket)).start();// Cria uma nova thread para lidar com o cliente
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.printStackTrace(); // Trata exceções de entrada/saída
 		}
-
-
 	}
 }
