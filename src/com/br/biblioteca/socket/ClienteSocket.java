@@ -15,6 +15,7 @@ import com.br.biblioteca.model.Livro;
 public class ClienteSocket {
 
 	public static void main(String[] args) {
+
 		ClienteFunctions clienteFunctions = new ClienteFunctions(); // Instância das funções do cliente
 		
 		try {
@@ -51,14 +52,12 @@ public class ClienteSocket {
 				}
 				
 			} while (opcao != 0);
-			
-			socket.close(); // Fecha o socket após a comunicação
+
+			socket.close(); // Fecha o socket após o término da aplicação
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace(); // Trata exceções de host desconhecido
+			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace(); // Trata exceções de entrada/saída
+			e.printStackTrace();
 		}
 	}
 }
