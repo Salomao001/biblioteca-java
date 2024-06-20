@@ -12,41 +12,19 @@ import java.net.Socket;
 import com.br.biblioteca.functions.ServidorFunctions;
 
 public class ServidorSocket {
-	
+
 	public static void main(String[] args ) {
-		ServidorFunctions servidorFunctions = new ServidorFunctions();
-		ServerSocket server;
-		try {
-			server = new ServerSocket(12345);
-			Socket socket = server.accept();
-			System.out.println("servidor conectado na porta " + socket.getLocalPort() + " ip " + socket.getInetAddress().getHostAddress());
-			
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			
-			int opcao;
-			do {
-				opcao = in.read();
-				
-				switch (opcao) {
-				case 1: servidorFunctions.getLivros(out); break;
-				case 2: servidorFunctions.alugarLivro(in.readLine(), in.readLine(), out); break;
-				case 3: servidorFunctions.devolverLivro(in.readLine(), in.readLine(), out); break;
-				case 4: servidorFunctions.AddLivro(in, out); break;
-				case 0: servidorFunctions.terminaAplicacao(out); break;
-				default:
-					System.out.println("outro");
-					break;
-				}
-				
-			} while (opcao != 0);
-			socket.close();
-			server.close();
+		try (ServerSocket serverSocket = new ServerSocket(12345)) { // Cria um ServerSocket na porta 12345
+			System.out.println("Servidor iniciado na porta " + 12345);
+
+			while (true) {
+				Socket clientSocket = serverSocket.accept(); // Aguarda uma conexão de um cliente
+				System.out.println("Nova conexão aceita: " + clientSocket.getInetAddress().getHostAddress());
+
+				new Thread(new ClientHandler(clientSocket)).start();// Cria uma nova thread para lidar com o cliente
+			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace(); // Trata exceções de entrada/saída
 		}
-		
-		
 	}
 }

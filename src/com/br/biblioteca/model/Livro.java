@@ -11,7 +11,8 @@ public class Livro {
 	private String genero;
 	@SerializedName("exemplares")
 	private int exemplares;
-	
+
+	// Construtor para criar um novo livro.
 	public Livro(String titulo, String autor, String genero, int exemplares) {
 		this.titulo = titulo;
 		this.autor = autor;
@@ -19,6 +20,7 @@ public class Livro {
 		this.exemplares = exemplares;
 	}
 
+	// Getters e Setters.
 	public String getTitulo() {
 		return titulo;
 	}
